@@ -70,7 +70,7 @@ function updateTimer() {
 async function openpip() {
     const container = document.querySelector(".timercontainer")
     
-    const pipWin = await window.documentPictureinPicture.requestWindow({
+    const pipWin = await window.documentPictureInPicture.requestWindow({
         width: 400,
         height: 300,
     })
