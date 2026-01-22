@@ -76,3 +76,34 @@ h1 {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+button {
+    background: linear-gradient(45deg, oklab(97.5% -0.006 -0.011), oklab(99.1% -0.012 0.003), oklab(97.8% -0.031 -0.009), oklab(85.6% -0.038 -0.031));
+  border: 3px solid;
+  border-radius: 8px;
+  padding: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: "Montserrat";
+  font-size: 30px;
+  font-weight: bold;
+}
+button:hover{
+background: linear-gradient(
+    45deg, 
+    oklab(98.5% -0.006 -0.011), 
+    oklab(99.6% -0.012 0.003), 
+    oklab(98.8% -0.031 -0.009), 
+    oklab(92.0% -0.038 -0.031)
+);
+
+}
+button:active{
+background: linear-gradient(
+    45deg, 
+    oklab(92.5% -0.006 -0.011), 
+    oklab(94.1% -0.012 0.003), 
+    oklab(92.8% -0.031 -0.009), 
+    oklab(80.6% -0.038 -0.031)
+);
+
+}
