@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 body {
   font-family: sans-serif;
-  background-color: #f0f0f0;
-  color: #333;
+  background: linear-gradient(45deg, oklab(18.4% 0.006 -0.052), oklab(29.7% 0.009 -0.075), oklab(38.7% 0.008 -0.073), oklab(54% 0.011 -0.078), oklab(77.7% 0.011 -0.053));
   padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+
 }
 h1 {
   color: #007bff;
@@ -25,6 +28,8 @@ h1 {
   background: linear-gradient(var(--angle), oklab(98.1% 0.003 -0.009), oklab(97.8% -0.031 -0.009), oklab(85.6% -0.038 -0.031), oklab(81.5% -0.057 -0.059))
 }
 #content{
+  --angle: 45deg; 
+  background: linear-gradient(var(--angle), oklab(97.8% 0.002 -0.006), oklab(93.5% 0.005 -0.017), oklab(87.3% 0.008 -0.028), oklab(81.6% 0.009 -0.034), oklab(78% 0.009 -0.031));
   border: 5px solid;
   border-radius: 8px;
   margin-left: auto;
@@ -34,4 +39,40 @@ h1 {
   margin-top: 50px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.timer-container h2{
+ text-align: center;
+ font-size: 50px;
+}
+.timer-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#timer{
+  font-family: "Orbitron";
+  font-weight: bold;
+  font-size: 80px;
+  display: flex;
+  justify-content: center;
+}
+#period{
+  padding: 20px;
+  display: flex;
+  font-size: 60px;
+  font-family: "Ubuntu";
+  justify-content: center;
+}
+#countdown-timer{
+  --angle: 45deg; 
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(var(--angle), oklab(97.5% -0.006 -0.011), oklab(99.1% -0.012 0.003), oklab(97.8% -0.031 -0.009), oklab(85.6% -0.038 -0.031));
+  border: 3px solid;
+  border-radius: 8px;
+  padding: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
