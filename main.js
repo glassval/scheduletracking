@@ -1,4 +1,3 @@
-
 const schedule = {
     1: { 
         1: ["07:45", "08:35"], 2: ["08:41", "09:34"], 3: ["09:40", "10:30"], 
@@ -27,7 +26,7 @@ const schedule = {
     }
 };
 
-
+const button = document.getElementById("pip");
 function parseTimeToSeconds(time) {
     const [h, m] = time.split(':').map(Number);
     return h * 3600 + m * 60;
@@ -58,17 +57,37 @@ function updateTimer() {
         if (diff > 0) {
             const minutes = Math.floor(diff / 60);
             const seconds = diff % 60;
-            document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timer').textContent = ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
         } else {
             document.getElementById('timer').textContent = '00:00';
         }
-        document.getElementById('period').textContent = `Period ${currentPeriod}`;
+        document.getElementById('period').textContent = Period ${currentPeriod};
     } else {
         document.getElementById('timer').textContent = '00:00';
         document.getElementById('period').textContent = 'No current period';
     }
 }
+async function openpip() {
+    const container = document.querySelector(".timercontainer")
+    
+    const pipWin = await window.documentPictureinPicture.requestWindow({
+        width: 400,
+        height: 300,
+    })
+    
+    pipWin.document.body.append(container)
 
+    const link = document.createElement("link")
+    link.rel = "stylesheet"
+    link.href = "style.css"
+    pipWin.document.head.appendChild(link)
 
+    pipWin.addEventListener("pagehide", () =>{
+        document.body.append(container)
+    })
+}
+button.addEventListener("click", () => {
+    openpip()
+})
 updateTimer();
 setInterval(updateTimer, 1000);
