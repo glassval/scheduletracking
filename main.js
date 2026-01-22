@@ -16,47 +16,46 @@ function parseTimeToSeconds(time) {
 function updateTimer() {
     const now = new Date();
     const dayOfWeek = now.getDay();
-    const periods = schedule[dayOfWeek];
-    if (!periods) {
-        document.getElementById('timer').textContent = '--:--';
-        document.getElementById('period').textContent = 'Weekend';
-        return;
-    }
+    const currentSeconds = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
 
-    const currentSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+    const periods = schedule[dayOfWeek];
     let currentPeriod = null;
     
-    for (const [period, times] of Object.entries(periods)) {
-        const start = parseTimeToSeconds(times[0]);
-        const end = parseTimeToSeconds(times[1]);
-        if (currentSeconds >= start && currentSeconds <= end) {
-            currentPeriod = period;
-            break;
+    if (periods) {
+        for (const [period, times] of Object.entries(periods)) {
+            const start = parseTimeToSeconds(times[0]);
+            const end = parseTimeToSeconds(times[1]);
+            if (currentSeconds >= start && currentSeconds <= end) {
+                currentPeriod = period;
+                break;
+            }
         }
     }
+
+    const timerDisplay = document.getElementById('timer');
+    const periodDisplay = document.getElementById('period');
 
     if (currentPeriod) {
         const endSeconds = parseTimeToSeconds(periods[currentPeriod][1]);
         const diff = endSeconds - currentSeconds;
-        
         const minutes = Math.floor(diff / 60);
         const seconds = diff % 60;
         
-        document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        document.getElementById('period').textContent = `Period ${currentPeriod}`;
+        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        periodDisplay.textContent = `Period ${currentPeriod}`;
     } else {
-        document.getElementById('timer').textContent = '00:00';
-        document.getElementById('period').textContent = 'Passing Time / No Class';
+        timerDisplay.textContent = '00:00';
+        periodDisplay.textContent = 'No current period';
     }
 }
 
 async function openpip() {
     if (!window.documentPictureInPicture) {
-        alert("Your browser does not support the Document Picture-in-Picture API.");
+        alert("PiP API not supported in this browser.");
         return;
     }
 
-    const container = document.querySelector(".timercontainer");
+    const container = document.querySelector(".timer-container");
     const pipWin = await window.documentPictureInPicture.requestWindow({
         width: 400,
         height: 300,
@@ -70,7 +69,8 @@ async function openpip() {
     pipWin.document.head.appendChild(link);
 
     pipWin.addEventListener("pagehide", () => {
-        document.body.append(container);
+        const contentDiv = document.getElementById("content");
+        contentDiv.prepend(container);
     });
 }
 
