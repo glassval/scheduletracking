@@ -8,6 +8,8 @@ const schedule = {
 
 const button = document.getElementById("pip");
 
+let pipContainer = null;
+
 function parseTimeToSeconds(time) {
     const [h, m] = time.split(':').map(Number);
     return h * 3600 + m * 60;
@@ -32,20 +34,31 @@ function updateTimer() {
         }
     }
 
-    const timerDisplay = document.getElementById('timer');
-    const periodDisplay = document.getElementById('period');
-
+    let timerText, periodText;
     if (currentPeriod) {
         const endSeconds = parseTimeToSeconds(periods[currentPeriod][1]);
         const diff = endSeconds - currentSeconds;
         const minutes = Math.floor(diff / 60);
         const seconds = diff % 60;
         
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        periodDisplay.textContent = `Period ${currentPeriod}`;
+        timerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        periodText = `Period ${currentPeriod}`;
     } else {
-        timerDisplay.textContent = '00:00';
-        periodDisplay.textContent = 'No current period';
+        timerText = '00:00';
+        periodText = 'No current period';
+    }
+
+
+    const mainTimer = document.getElementById('timer');
+    const mainPeriod = document.getElementById('period');
+    if (mainTimer) mainTimer.textContent = timerText;
+    if (mainPeriod) mainPeriod.textContent = periodText;
+
+    if (pipContainer) {
+        const pipTimer = pipContainer.querySelector('#timer');
+        const pipPeriod = pipContainer.querySelector('#period');
+        if (pipTimer) pipTimer.textContent = timerText;
+        if (pipPeriod) pipPeriod.textContent = periodText;
     }
 }
 
@@ -61,7 +74,8 @@ async function openpip() {
         height: 300,
     });
     
-    pipWin.document.body.append(container);
+    pipContainer = container.cloneNode(true);
+    pipWin.document.body.append(pipContainer);
 
     const link = document.createElement("link");
     link.rel = "stylesheet";
@@ -69,8 +83,7 @@ async function openpip() {
     pipWin.document.head.appendChild(link);
 
     pipWin.addEventListener("pagehide", () => {
-        const contentDiv = document.getElementById("content");
-        contentDiv.prepend(container);
+        pipContainer = null;
     });
 }
 
